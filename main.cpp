@@ -30,15 +30,3 @@ int main(int argc, char *argv[])
     }
     return 0;
 }
-
-// for (i = 0; i < r; i++)
-// {
-//     for (j = 0; j < c; j++)
-//     {
-//         mul[i][j] = 0;
-//         for (k = 0; k < c; k++)
-//         {
-//             mul[i][j] += a[i][k] * b[k][j];
-//         }
-//     }
-// }
