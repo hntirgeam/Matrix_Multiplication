@@ -78,19 +78,25 @@ bool operator==(const Matrix &m1, const Matrix &m2)
 
 Matrix operator*(const Matrix &m1, const Matrix &m2)
 {
-    Matrix mul;
+    Matrix tmp;
+
+    tmp.m_matrix.resize(m1.row);
+
+    for (auto &m : tmp.m_matrix)
+        m.resize(m1.col);
+
     for (size_t i = 0; i < m1.row; i++)
     {
-        for (size_t j = 0; j < m1.col; j++)
+        for (size_t j = 0; j < m1.row; j++)
         {
-            mul.m_matrix[i][j] = 0;
-            for (size_t k = 0; k < m1.col; k++)
+            tmp.m_matrix[i][j] = 0;
+            for (size_t k = 0; k < m1.row; k++)
             {
-                mul.m_matrix[i][j] += m1.m_matrix[i][k] * m2.m_matrix[k][j];
+                tmp.m_matrix[i][j] += m1.m_matrix[i][k] * m2.m_matrix[k][j];
             }
         }
     }
-    return mul;
+    return tmp;
 }
 
 Matrix::Matrix()
