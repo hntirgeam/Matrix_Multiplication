@@ -87,7 +87,7 @@ Matrix operator*(const Matrix &m1, const Matrix &m2)
     //         }
     //     }
     // }
-    // return tmp; // сука здесь добавь возврат
+    // return tmp; // здесь добавь возврат
 }
 
 int &Matrix::operator()(int row, int col)
