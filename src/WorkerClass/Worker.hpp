@@ -24,6 +24,6 @@ private:
     Matrix m1, m2;
     Matrix tmp;
 
-    size_t m_dim;      //  matrix dimension
-    size_t num_thread; // thread amount
+    size_t m_dim;      // Размерность матрицы
+    size_t num_thread; // Кол-во тредов
 };

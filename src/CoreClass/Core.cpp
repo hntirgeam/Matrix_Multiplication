@@ -3,9 +3,9 @@
 void Core::start()
 {
 
-    Matrix m1;
-    m1.load(matrix1path);
-    std::cout << m1 << std::endl;
+    Matrix m1;                              // Создаётся объект 
+    m1.load(matrix1path);                   // Парсится файл с матрицей и параметры заносятся в вектор векторов интов 
+    std::cout << m1 << std::endl;           // Через перегруженный оператор матрица выводится в консоль
 
     std::cout << "==========" << std::endl;
 
@@ -15,7 +15,7 @@ void Core::start()
 
     std::cout << "==========" << std::endl;
 
-    Matrix m3(m1 * m2);
+    Matrix m3(m1 * m2);                     // Через перегруженный оператор умножения производится вычисление произведения матрицы
     std::cout << m3 << std::endl;
-    
+    // дальше в Matrix.cpp
 }

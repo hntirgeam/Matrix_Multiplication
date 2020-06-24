@@ -2,15 +2,13 @@
 #include "WorkerClass/Worker.hpp"
 #include "CoreClass/Core.hpp"
 
-Matrix::Matrix(size_t threadCount) : t_num(threadCount)
+
+
+Matrix::Matrix(const Matrix &copy) : m_matrix(copy.m_matrix), row(copy.row), col(copy.col) // Конструктор копирования
 {
 }
 
-Matrix::Matrix(const Matrix &copy) : m_matrix(copy.m_matrix), row(copy.row), col(copy.col)
-{
-}
-
-void Matrix::load(const std::string &pathToFile)
+void Matrix::load(const std::string &pathToFile) // Функция, отвечающая за чтение и занесение матрицы из файла в 2д массив
 {
     std::ifstream file(pathToFile);
     if (!file.is_open())
@@ -27,7 +25,7 @@ void Matrix::load(const std::string &pathToFile)
         return;
     }
 
-    m_matrix.resize(row);
+    m_matrix.resize(row);   // Изменяем размер матрицы исходя из размерности, полученной из файла
 
     for (auto &m : m_matrix)
         m.resize(col);
@@ -41,8 +39,7 @@ void Matrix::load(const std::string &pathToFile)
     }
 }
 
-// Дописать
-void Matrix::write()
+void Matrix::write() // Функция записи в файл 
 {
     std::ofstream file;
     file.open("result");
@@ -64,7 +61,7 @@ void Matrix::write()
     }
 }
 
-std::ostream &operator<<(std::ostream &out, const Matrix &m)
+std::ostream &operator<<(std::ostream &out, const Matrix &m) // Перегрузка оператора вывода
 {
     for (auto const &_row : m.m_matrix)
     {
@@ -77,12 +74,12 @@ std::ostream &operator<<(std::ostream &out, const Matrix &m)
     return out;
 }
 
-bool operator==(const Matrix &m1, const Matrix &m2)
+bool operator==(const Matrix &m1, const Matrix &m2) // Перегрузка оператора сравнения (я подумал, что этим можно проверят матрицы на возможность перемножения)
 {
     return m1.col == m2.row ? 1 : 0;
 }
 
-Matrix operator*(const Matrix &m1, const Matrix &m2)
+Matrix operator*(const Matrix &m1, const Matrix &m2) // Перегрузка оператора умножения
 {
     Matrix tmp;
 
@@ -90,19 +87,19 @@ Matrix operator*(const Matrix &m1, const Matrix &m2)
     for (auto &m : tmp.m_matrix)
         m.resize(m1.col);
     
-    Worker w(Core::getThreadNumber(), m1, m2, tmp);
+    Worker w(Core::getThreadNumber(), m1, m2, tmp); // Создание объекта, который работает с многопоточностью (кол-во потоков, три матрицы)
     
-    tmp = w.calculate();
+    tmp = w.calculate(); 
     tmp.write();
     return tmp;
 }
 
-int64_t &Matrix::operator()(int row, int col)
+int64_t &Matrix::operator()(int row, int col) // Перегрузка оператора двойной индексации 
 {
     return m_matrix[row][col];
 }
 
-size_t Matrix::getRow() const
+size_t Matrix::getRow() const 
 {
     return row;
 }

@@ -9,7 +9,6 @@ class Matrix
 {
 public:
     Matrix(){};
-    Matrix(size_t threadCount);
     Matrix(const Matrix &copy);
     ~Matrix(){};
 
