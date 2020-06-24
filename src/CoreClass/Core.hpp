@@ -6,7 +6,8 @@
 class Core
 {
 public:
-    Core(size_t threadNumber, const std::string &matrix1, const std::string &matrix2) : m_threadNumber(threadNumber), matrix1path(matrix1), matrix2path(matrix2)
+    Core(const std::string &matrix1, const std::string &matrix2)
+        : matrix1path(matrix1), matrix2path(matrix2)
     {
     }
     ~Core()
@@ -14,8 +15,17 @@ public:
     }
 
     void start();
+    void setThreadNumber(size_t t_num)
+    {
+        m_threadNumber = t_num;
+    }
+
+    static size_t getThreadNumber()
+    {
+        return m_threadNumber;
+    }
 
 private:
-    size_t m_threadNumber;
+    static inline size_t m_threadNumber;
     std::string matrix1path, matrix2path;
 };

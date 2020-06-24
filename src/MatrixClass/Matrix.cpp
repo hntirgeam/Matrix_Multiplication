@@ -1,5 +1,6 @@
 #include "Matrix.hpp"
 #include "WorkerClass/Worker.hpp"
+#include "CoreClass/Core.hpp"
 
 Matrix::Matrix(size_t threadCount) : t_num(threadCount)
 {
@@ -52,6 +53,14 @@ void Matrix::write()
     }
     else
     {
+        for (auto &m : m_matrix)
+        {
+            for (auto &in : m)
+            {
+                file << in << ' ';
+            }
+            file << '\n';
+        }
     }
 }
 
@@ -80,36 +89,20 @@ Matrix operator*(const Matrix &m1, const Matrix &m2)
     tmp.m_matrix.resize(m1.row);
     for (auto &m : tmp.m_matrix)
         m.resize(m1.col);
-
-    Worker w(2, m1, m2, tmp);
-
-    return w.calculate();
-
-    // for (size_t i = 0; i < m1.row; i++)
-    // {
-    //     for (size_t j = 0; j < m1.row; j++)
-    //     {
-    //         tmp.m_matrix[i][j] = 0;
-    //         for (size_t k = 0; k < m1.row; k++)
-    //         {
-    //             tmp.m_matrix[i][j] += m1.m_matrix[i][k] * m2.m_matrix[k][j];
-    //         }
-    //     }
-    // }
-    // return tmp;
+    
+    Worker w(Core::getThreadNumber(), m1, m2, tmp);
+    
+    tmp = w.calculate();
+    tmp.write();
+    return tmp;
 }
 
-int &Matrix::operator()(int row, int col)
+int64_t &Matrix::operator()(int row, int col)
 {
     return m_matrix[row][col];
 }
 
-const int &Matrix::operator()(int row, int col) const
-{
-    return m_matrix[row][col];
-}
-
-int Matrix::getRow() const
+size_t Matrix::getRow() const
 {
     return row;
 }
