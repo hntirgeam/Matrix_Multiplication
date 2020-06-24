@@ -68,13 +68,14 @@ bool operator==(const Matrix &m1, const Matrix &m2)
 Matrix operator*(const Matrix &m1, const Matrix &m2)
 {
     Matrix tmp;
-    Worker w(1, m1.getRow());
 
     tmp.m_matrix.resize(m1.row);
     for (auto &m : tmp.m_matrix)
         m.resize(m1.col);
 
-    return w.calculate(m1, m2, tmp);
+    Worker w(2, m1, m2, tmp);
+
+    return w.calculate();
 
     // for (size_t i = 0; i < m1.row; i++)
     // {
@@ -109,7 +110,7 @@ Matrix::Matrix()
 {
 }
 
-Matrix::Matrix(const Matrix &copy) : m_matrix(copy.m_matrix)
+Matrix::Matrix(const Matrix &copy) : m_matrix(copy.m_matrix), row(copy.row), col(copy.col)
 {
 }
 
