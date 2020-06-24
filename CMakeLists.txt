@@ -5,6 +5,8 @@ project(MatrixMultiplication)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR})
 set(CMAKE_CXX_STANDARD 17)
 
+find_package(Boost COMPONENTS thread REQUIRED)
+
 set(SRCS
     src/CoreClass/Core.cpp
     src/CoreClass/Core.hpp
@@ -14,5 +16,7 @@ set(SRCS
     src/WorkerClass/Worker.hpp)
 
 include_directories(src)
-SET(CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} "-std=c++17 -pthread")
-add_executable(matrix.out ${SRCS} src/CoreClass/main.cpp)
+
+add_executable(${PROJECT_NAME} ${SRCS} src/CoreClass/main.cpp)
+
+target_link_libraries(${PROJECT_NAME} Boost::thread)

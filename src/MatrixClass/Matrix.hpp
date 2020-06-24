@@ -8,12 +8,15 @@
 class Matrix
 {
 public:
-    Matrix();
+    Matrix(){};
+    Matrix(size_t threadCount);
     Matrix(const Matrix &copy);
-    ~Matrix();
+    ~Matrix(){};
 
     void load(const std::string &pathToFile);
+
     int getRow() const;
+    int getVecSize() { return m_matrix.capacity(); }; // remove later;
 
     Matrix &operator=(const Matrix &m)
     {
@@ -31,5 +34,6 @@ public:
 private:
     std::vector<std::vector<int>> m_matrix;
     int row, col;
+    size_t t_num;
     void write();
 };

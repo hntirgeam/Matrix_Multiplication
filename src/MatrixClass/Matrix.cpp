@@ -1,6 +1,14 @@
 #include "Matrix.hpp"
 #include "WorkerClass/Worker.hpp"
 
+Matrix::Matrix(size_t threadCount) : t_num(threadCount)
+{
+}
+
+Matrix::Matrix(const Matrix &copy) : m_matrix(copy.m_matrix), row(copy.row), col(copy.col)
+{
+}
+
 void Matrix::load(const std::string &pathToFile)
 {
     std::ifstream file(pathToFile);
@@ -88,7 +96,7 @@ Matrix operator*(const Matrix &m1, const Matrix &m2)
     //         }
     //     }
     // }
-    // return tmp; // здесь добавь возврат
+    // return tmp;
 }
 
 int &Matrix::operator()(int row, int col)
@@ -104,16 +112,4 @@ const int &Matrix::operator()(int row, int col) const
 int Matrix::getRow() const
 {
     return row;
-}
-
-Matrix::Matrix()
-{
-}
-
-Matrix::Matrix(const Matrix &copy) : m_matrix(copy.m_matrix), row(copy.row), col(copy.col)
-{
-}
-
-Matrix::~Matrix()
-{
 }
