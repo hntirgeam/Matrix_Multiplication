@@ -13,12 +13,16 @@ public:
     ~Matrix();
 
     void load(const std::string &pathToFile);
+    int getRow() const;
 
     Matrix &operator=(const Matrix &m)
     {
         m_matrix = m.m_matrix;
         return *this;
     }
+
+    int &operator()(int row, int col);
+    const int &operator()(int row, int col) const;
 
     friend bool operator==(const Matrix &m1, const Matrix &m2);
     friend Matrix operator*(const Matrix &m1, const Matrix &m2);

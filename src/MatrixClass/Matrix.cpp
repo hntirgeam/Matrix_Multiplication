@@ -1,5 +1,5 @@
 #include "Matrix.hpp"
-// #include "ThreadClass/Thread.hpp"
+#include "WorkerClass/Worker.hpp"
 
 void Matrix::load(const std::string &pathToFile)
 {
@@ -32,10 +32,11 @@ void Matrix::load(const std::string &pathToFile)
     }
 }
 
+// Дописать
 void Matrix::write()
 {
     std::ofstream file;
-    file.open("matrix3");
+    file.open("result");
     if (!file.is_open())
     {
         std::cerr << "Error opening matrix file.\n";
@@ -43,7 +44,6 @@ void Matrix::write()
     }
     else
     {
-        
     }
 }
 
@@ -68,23 +68,41 @@ bool operator==(const Matrix &m1, const Matrix &m2)
 Matrix operator*(const Matrix &m1, const Matrix &m2)
 {
     Matrix tmp;
-    // Thread thread();
+    Worker w(1, m1.getRow());
+
     tmp.m_matrix.resize(m1.row);
     for (auto &m : tmp.m_matrix)
         m.resize(m1.col);
 
-    for (size_t i = 0; i < m1.row; i++)
-    {
-        for (size_t j = 0; j < m1.row; j++)
-        {
-            tmp.m_matrix[i][j] = 0;
-            for (size_t k = 0; k < m1.row; k++)
-            {
-                tmp.m_matrix[i][j] += m1.m_matrix[i][k] * m2.m_matrix[k][j];
-            }
-        }
-    }
-    return tmp;
+    return w.calculate(m1, m2, tmp);
+
+    // for (size_t i = 0; i < m1.row; i++)
+    // {
+    //     for (size_t j = 0; j < m1.row; j++)
+    //     {
+    //         tmp.m_matrix[i][j] = 0;
+    //         for (size_t k = 0; k < m1.row; k++)
+    //         {
+    //             tmp.m_matrix[i][j] += m1.m_matrix[i][k] * m2.m_matrix[k][j];
+    //         }
+    //     }
+    // }
+    // return tmp; // сука здесь добавь возврат
+}
+
+int &Matrix::operator()(int row, int col)
+{
+    return m_matrix[row][col];
+}
+
+const int &Matrix::operator()(int row, int col) const
+{
+    return m_matrix[row][col];
+}
+
+int Matrix::getRow() const
+{
+    return row;
 }
 
 Matrix::Matrix()

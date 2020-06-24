@@ -9,8 +9,10 @@ set(SRCS
     src/CoreClass/Core.cpp
     src/CoreClass/Core.hpp
     src/MatrixClass/Matrix.cpp
-    src/MatrixClass/Matrix.hpp)
+    src/MatrixClass/Matrix.hpp
+    src/WorkerClass/Worker.cpp
+    src/WorkerClass/Worker.hpp)
 
 include_directories(src)
 
-add_executable(main ${SRCS} src/CoreClass/main.cpp)
+add_executable(matrix.out ${SRCS} src/CoreClass/main.cpp)
