@@ -17,5 +17,4 @@ void Core::start()
 
     Matrix m3(m1 * m2);
     std::cout << m3 << std::endl;
-    
 }

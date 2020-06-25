@@ -16,6 +16,7 @@ void Matrix::load(const std::string &pathToFile)
     if (!file.is_open())
     {
         std::cerr << "Error opening matrix file.\n";
+        exit(2);
         return;
     }
 
@@ -24,6 +25,7 @@ void Matrix::load(const std::string &pathToFile)
     if (row < 1 || col < 1)
     {
         std::cerr << "Matrix can't be sized like this.\n";
+        exit(1);
         return;
     }
 
@@ -41,7 +43,6 @@ void Matrix::load(const std::string &pathToFile)
     }
 }
 
-// Дописать
 void Matrix::write()
 {
     std::ofstream file;
